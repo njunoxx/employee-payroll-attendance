@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+{% load static %}
+    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet">
+
+<!-- Page title will be written here -->    
+    <title>
+    {% block title %}
+        
+    {% endblock %}
+    </title>
+
+<!-- custom CSS will be written here -->
+        {% block custom_css %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"/>
+        {% endblock %}
+    
+    <script src='main.js'></script>
+
+    
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'employee-index' %}">Home</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Employee Management
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'employee-add' %}">Add Employee</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Attendance Management
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'attendance-index' %}">Attendace</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'attendance-add' %}">Add Attendance</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Payroll Management
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'payroll-index' %}">Payroll</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'payroll-add' %}">Add Payroll</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">LogOut</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          
+          </div>
+        </div>
+        <form class="d-flex" role="search" action="{% url 'employee-search' %}" method="get">
+          <input class="form-control me-2" name="search" id="search" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+      </nav>
+
+<!-- Body content will be written here -->
+    {% block content %}
+
+    {% endblock %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- custom js will be written here -->
+
+    {% block custom_js %}
+
+    {% endblock %}
+ 
+    
+</body>
+</html>

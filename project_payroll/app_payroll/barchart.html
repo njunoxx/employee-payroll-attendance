@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="col-md-6">
+            <div>
+                <canvas id="myChart" width="483" height="138" style="display: block;box-sizing: border-box;height: 138px;width: 200px;">
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        const ctx = document.getElementById('myChart');
+                    
+                        new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [{% for val in data %} '{{val.employee}}', {% endfor %}],
+                            datasets: [{
+                            label: '{}',
+                            data: [{% for val in data %} '{{val.hours_worked}}'  {% endfor %}],
+                            borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                            }
+                        }
+                        });
+                    </script>
+                </canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script>
+                        const ctx = document.getElementById('myChart');
+                    
+                        new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: [{% for val in data %} '{{val.employee}}',  {% endfor %}],
+                            datasets: [{
+                            label: '# of Votes',
+                            data: [{% for val in data %} '{{val.hours_worked}}', {% endfor %}],
+                            borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                            }
+                        }
+                        });
+                    </script>
+                </canvas>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

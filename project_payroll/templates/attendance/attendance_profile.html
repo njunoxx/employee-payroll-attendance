@@ -1,0 +1,71 @@
+{% extends 'layouts/master.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block title %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        {% load static %}
+        {% include 'partials/_message.html' %}
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+        {% endblock %}
+    </head>    
+    {% block content %}
+    <body>
+        <h3 style="text-align: center;">Welcome to Employee Profile Page.</h3>
+        <a href="{% url 'attendance-index' %}" class="btn btn-primary">BACK</a>
+        <br>
+        <div class="container mt-2">
+            <table class="table table-dark table-striped" style="text-align: center;">  
+                <thead>
+                <tr>
+                    <th>S.No</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Checked In</th>
+                  <th scope="col">Checket Out</th>
+                  <th scope="col">Worked Hours</th>
+                  <th class="col">Status</th>
+                  <th colspan="2">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for val in data %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ val.employee }}</td>
+                  <td>{{ val.date }}</td>
+                  <td>{{ val.time_in }}</td>
+                  <td>{{ val.time_out }}</td>
+                  <td>{{ val.hours_worked }}</td>
+                  <td>{{ val.status }}</td>
+                  <td><a href="{% url 'attendance-edit' val.id %}">Edit</a></td>
+                  <td><a href="{% url 'attendance-delete' val.id %}">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody> 
+                <div class="card" style="display: block;">
+                    <form action="{% url 'attendance-index' %}" method="post">
+                        <t><b>Please enter the desired date range:</b></t>
+                        {% csrf_token %}
+                        {% for val in data %}<input type="hidden" name="employee" value="{{ val.employee }}"> {% endfor %}
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" name="start_date" width="40%" style="border: groove;">
+                        </div>
+                        <div class="form-group mt-1">
+                            <label>End Date</label>
+                            <input type="date" name="end_date"  width="40%" style="border: groove;">
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="SEARCH">
+                    </form>
+                </div>    
+          </div> 
+    </body>
+    {% endblock %}    
+</html>

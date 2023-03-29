@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Attendance|Edit</title>
+    {% load static %}
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '/css/bootstrap.min.css' %}">
+    <script src='main.js'></script>
+</head>
+<body>
+    <form action="{% url 'attendance-edit' data.id %}" method="post">
+        {% csrf_token %}
+        <div class="container mt-5">
+            <div class="form">
+                <label>Employee: <b>{{data.employee}}</b></label>
+            </div>
+            <br>
+            <div class="form">
+                <label>Date ({{ data.date }})</label>
+                <input type="date" name="date" class="form-control" value="{{ data.date }}" required>
+            </div>
+            <div class="form">
+                <label>Time In (Format:HH:MM:SS {{data.time_in}} )</label>
+                <input type="time" name="time_in" class="form-control" value="{{ data.time_in }}">
+            </div>
+            <div class="form">
+                <label>Time Out (Format: HH:MM:SS  {{data.time_out}})</label>
+                <input type="time" name="time_out" class="form-control" value="{{ data.time_out }}">
+            </div>
+            <div class="form mt-4">
+                <input type="submit" class="btn btn-primary" value="EDIT">
+            </div>
+        </div>
+    </form>    
+</body>
+</html>

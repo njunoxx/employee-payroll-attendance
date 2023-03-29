@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% load static %}
+  <style>
+    body {
+        background-image: url('{% static "/image/background3.jpg" %}');
+        /* Additional background styles */
+    }
+</style>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Payroll|Detail</title>
+ 
+  <h2 style="text-align: center;">You are at Employee's Payroll Details Page</h2>
+  <br>
+  <a href="{% url 'payroll-index' %}" class="btn btn-primary">Back</a>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href="{% static '/css/bootstrap.min.css' %}">
+  <script src='main.js'></script>
+</head>
+<body>
+
+  <div class="container mt-5">
+    <table class="table table-dark table-striped" style="text-align: center;">  
+        <thead>
+        <tr>
+            <th>S.No</th>
+          <th scope="col">Employee</th>
+          <th scope="col">Salary</th>
+          <th scope="col">Bonus</th>
+          <th scope="col">Taxes</th>
+          <th scope="col">Other deduction</th>
+          <th class="scope">Net Salary</th>
+          <th class="scope">Pay Period Start</th>
+          <th class="scope">Status</th>
+          <th class="scope">Pay Period End</th>
+          <th colspan="2">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for val in data %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ val.employee }}</td>
+          <td>{{ val.salary }}</td>
+          <td>{{ val.bonus }}</td>
+          <td>{{ val.taxes }}</td>
+          <td>{{ val.other_deduction }}</td>
+          <td>{{ val.net_salary }}</td>
+          <td>{{ val.pay_period_start }}</td>
+          <td>{{ val.status }}</td>
+          <td>{{ val.pay_period_end }}</td>
+          <td><a href="{% url 'payroll-edit' val.id %}">Edit</a></td>
+          <td><a href="{% url 'payroll-pdf' val.employee %}">PDF</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>  
+</div>
+ 
+</body>
+</html>

@@ -1,0 +1,48 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+  Employee Index
+{% endblock %}
+
+{% block content %}
+<head>
+  {% load static %}
+  <style>
+    body{
+      background-image: url('{% static "/image/background1.jpg" %}');
+    }
+  </style>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Employee Index</title>
+  {% include 'partials/_message.html' %}
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href="#">
+  <script src='main.js'></script>
+</head>
+<body>
+  <div class="container mt-5">
+    <table class="table table-dark table-striped" style="text-align: center;">  
+      <thead>
+        <tr>
+          <th scope="col">S No.</th>
+          <th scope="col">Name</th>
+          <th scope="col">Contact</th>
+          <th colspan="2">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for val in data %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td><a href="{% url 'employee-profile' val.id %}">{{ val.full_name|title }}</a></td>
+          <td>{{ val.contact }}</td>
+          <td><a href="{% url 'employee-edit' val.id %}">Edit</a></td>
+          <td><a href="{% url 'employee-delete' val.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody> 
+  </div>     
+
+  
+{% endblock %}

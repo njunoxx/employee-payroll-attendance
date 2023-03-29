@@ -1,0 +1,39 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}  
+<head>
+   
+    <title>Attendance</title>
+    
+   
+   
+    
+</head>
+{% endblock %}
+
+{% block content %}
+<body>
+    {% load static %}
+    <style>
+        body{
+            background-image: url('{% static "image/background3.jpg" %}');
+        }
+    </style>
+  <h2 style="text-align: center;">Please Select Employee to view their Payroll Info:</h2>
+  {% include 'partials/_message.html' %}
+    <form action="{% url 'payroll-profile' %}"  method="post">
+        {% csrf_token %}
+        <div class="container mt-5">
+            <div class="form-group mb-2">
+                <label>Select Employee</label>
+                <select name="full_name" class="form-control">
+                    {% for val in data %}
+                    <option value="{{ val.full_name }}">{{ val.full_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <input type="submit" class="btn btn-primary" value="ENTER">
+    </form>
+</body>
+{% endblock %}
+</html>

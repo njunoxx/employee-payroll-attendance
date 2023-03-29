@@ -1,0 +1,49 @@
+{% load static %}
+<h3 style="text-align: center;">Please Enter the necessary details of Employee:</h3>
+{% include 'partials/_message.html' %}
+<a href="{% url 'payroll-index' %}" class="btn btn-primary">Back</a>
+<a href="{% url 'employee-index' %}" class="btn btn-primary">Employee-Profile</a>
+<link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet">
+<form action="{% url 'payroll-add' %}" method="post">
+    {% csrf_token %}
+    <div class="container mt-5">
+        <div class="form-group mb-2">
+            <label>Select Employee</label>
+            <select name="employee" class="form-control">
+                {% for val in data %}
+                <option value="{{ val.id }}">{{ val.full_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Salary</label>
+            <input type="number" name="salary" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Bonus</label>
+            <input type="number" name="bonus" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Taxes</label>
+            <input type="number" name="taxes" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Other Deductions</label>
+            <input type="number" name="other_deductions" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Pay Period start</label>
+            <input type="date" name="pay_period_start" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label>Pay Period End</label>
+            <input type="date" name="pay_period_end" class="form-control" required>
+        </div>
+        <br>
+                <input type="checkbox" name="status" value="status">
+                <label for="status"> Status</label>
+        <br>
+        <div class="form-group mt-4">
+            <input type="submit" class= "btn btn-primary" value="ADD">
+        </div>
+</form>

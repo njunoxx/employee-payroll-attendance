@@ -1,0 +1,43 @@
+{% extends 'layouts/master.html' %}
+
+{% block title %}
+Search Results
+{% endblock %}
+
+{% block content %}
+<div class="contaier mt-4">
+    <div class="row">
+      <h2 style="text-align: center;">Search Results:</h2> 
+      <div class="container mt-3" style="text-align: center;">
+        {% if data|length < 1  %} 
+        <p>No Results Found</p>
+        <p>Your Search Query: <b>{{query}}</b> did not match with any!</p><br>
+        <p>Suggestions:</p>
+        <ul style="list-style-position:inside;">
+            Make sure all words are spelled correctly.
+            <li>Try different keywords.</li>     
+            <li>Try more General keywords.</li>
+            <li>Try fewer keywords</li>
+            <li>Try Different keywords</li>
+        </ul>
+        {% endif %}
+      </div>
+      {% for val in data %}
+      <div class="col-md-4">
+        <div class="card" style="width: 18rem; margin-left: 125%;">
+          <div class="card-body">
+            <h5 class="card-title">Employee: {{ val.full_name }}</h5>
+            <p class="card-text">Email: {{ val.email }}</p>
+            <p class="card-text">Gender: {{ val.gender }}</p>
+            <p class="card-text">Address: {{ val.address }}</p>
+            <p class="card-text">Contact: {{ val.contact }}</p>
+            <a href="{% url 'search-attendance' val.full_name %}" class="btn btn-primary">Attendace</a>
+            <a href="{% url 'search-payroll' val.full_name %}" class="btn btn-primary">Payroll</a>
+          </div>
+        </div>
+      </div>  
+      <br>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

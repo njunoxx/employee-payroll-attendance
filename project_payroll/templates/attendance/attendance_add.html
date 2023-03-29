@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Attendance|Add</title>
+    <h2 style="text-align: center;">Enter the Attendance Details:</h2>
+    {% include 'partials/_message.html' %}
+    {% load static %}
+    <a href="{% url 'attendance-profile' %}" class="btn btn-primary">BACK</a>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href="{% static '/css/bootstrap.min.css' %}">
+    <script src='main.js'></script>
+</head>
+<body>
+    <form action="{% url 'attendance-add' %}" method="post" style="background-color: darkgrey;"  >
+        {% csrf_token %}
+        <div class="container mt-5">
+            
+                <div class="form-group mb-2">
+                    <label>Select Employee</label>
+                    <select name="employee" class="form-control">
+                        {% for val in data %}
+                        <option value="{{ val.id }}">{{ val.full_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <input type="date" name="date" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Checked In (HH:MM:SS)</label>
+                    <input type="time" name="start_in" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Checked Out</label>
+                    <input type="time" name="start_out" class="form-control" required>
+                </div>
+                <!-- <div class="form-group">
+                    <label>Worked Hours</label>
+                    <input type="text" name="hours_worked" class="form-control" required>
+                </div> -->
+                <br>
+                <input type="checkbox" name="status" value="status">
+                <label for="status"> Status</label><br>
+            
+                <div class="form-group mt-4">
+                    <input type="submit" class= "btn btn-primary" value="ADD">
+                </div>
+        </div>    
+    </form>
+</body>
+</html>
