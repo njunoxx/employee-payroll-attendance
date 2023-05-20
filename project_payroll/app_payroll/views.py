@@ -207,22 +207,28 @@ class AddAttendance(View):
 
     def post(self, request):
         attendance_date = request.POST.get('date')
+        time_in1 = request.POST.get('start_in')
+        time_out1 = request.POST.get('start_out')
+        time_in2 = datetime.strptime(time_in1, '%H:%M') 
+        time_out2 = datetime.strptime(time_out1, '%H:%M')
         try:
      # condition that enables employee to create attendance for present date only
             if attendance_date < str(date.today()) or attendance_date > str(date.today()):
                 messages.error(request, "Error!!! You have entered PAST or Future Date. Please Try again.")
                 return redirect('attendance-add')
-                
+            
+            elif time_in1 < "09:00" or time_in1>"09:00" and time_out1<"17:00" or time_out1>"17:00":
+                messages.error(request, "You have selected invalid time frame!!")
+                return redirect('attendance-add')
                 
             else:
                 emp = Employee.objects.get(id=request.POST.get('employee'))
                 att = Attendance()
                 att.employee = emp
                 att.date = request.POST.get('date')
-                time_in1 = request.POST.get('start_in')
-                time_out1 = request.POST.get('start_out')
-                time_in = datetime.strptime(time_in1, '%H:%M')
-                time_out = datetime.strptime(time_out1, '%H:%M')
+               
+                time_in = time_in2
+                time_out = time_out2
     # calculation of total working hours
                 hours_worked = time_out - time_in
                 att.time_in = time_in1

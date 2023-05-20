@@ -97,12 +97,14 @@ class AttendanceApiView(APIView):
             time_in1 = request.POST.get('time_in')
             time_out1 = request.POST.get('time_out')
             time_format = "%H:%M:%S.%f"
+            date_format = request.POST.get('date')
+            date_obj = datetime.strptime(date_format, '%Y-%m-%d').date()
             time_in = datetime.strptime(time_in1, time_format)
             time_out = datetime.strptime(time_out1, time_format)
             hours_worked = (time_out - time_in).total_seconds()/3600
             data = {
                 "employee" : request.POST.get('employee'),
-                "date" : request.POST.get('date'),
+                "date" : date_obj,
                 "time_in": time_in1,
                 "time_out": time_out1,
                 "hours_worked": hours_worked,
@@ -110,7 +112,7 @@ class AttendanceApiView(APIView):
             }
             status1 = Attendance.objects.filter(status=True,
                                                 employee=request.POST.get('employee'),
-                                                date=request.POST.date
+                                                date=request.POST.get('date')
                                                 )
             if status1.exists():
                 return Response({"msg":"Attendance for today has already been recorded."}, status=status.HTTP_406_NOT_ACCEPTABLE)
@@ -143,23 +145,20 @@ class AttendanceApiIdView(APIView):
         if not instance:
             return Response({"msg":"Not Found"}, status=status.HTTP_404_NOT_FOUND)
         
-        attendance_date = request.POST.get('date')
-        if attendance_date < str(date.today()) or attendance_date > str(date.today()):
-            return Response({"msg":"You have entered either Past or Future Date."}, status=status.HTTP_403_FORBIDDEN)
-        else:
-            time_in1 = request.POST.get('time_in')
-            time_out1 = request.POST.get('time_out')
-            time_format = "%H:%M:%S.%f"
-            time_in = datetime.strptime(time_in1, time_format)
-            time_out = datetime.strptime(time_out1, time_format)
-            hours_worked = (time_out - time_in).total_seconds()/3600
-            data = {
-                "employee" : request.POST.get('employee'),
-                "date" : request.POST.get('date'),
-                "time_in": time_in1,
-                "time_out": time_out1,
-                "hours_worked": hours_worked,
-            }
+    
+        time_in1 = request.POST.get('time_in')
+        time_out1 = request.POST.get('time_out')
+        time_format = "%H:%M:%S.%f"
+        time_in = datetime.strptime(time_in1, time_format)
+        time_out = datetime.strptime(time_out1, time_format)
+        hours_worked = (time_out - time_in).total_seconds()/3600
+        data = {
+            "employee" : request.POST.get('employee'),
+            "date" : request.POST.get('date'),
+            "time_in": time_in1,
+            "time_out": time_out1,
+            "hours_worked": hours_worked,
+        }
         serializer = AttendanceSerializer(data=data, instance=instance)
         if serializer.is_valid():
             serializer.save()
@@ -391,7 +390,7 @@ class UserLogoutApiView(APIView):
     def get(self, request):
         user = request
         logout(user)
-        return Response({"msg":"Loggedout"}, status=status.HTTP_200_OK)
+        return Response({"msg":"LoggedOut Successfully!!!"}, status=status.HTTP_200_OK)
     
 class UserRegisterApiView(APIView):
     def get(self, request):
